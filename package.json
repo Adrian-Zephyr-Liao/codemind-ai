@@ -4,18 +4,71 @@
   "description": "AI-assisted programming assistant",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.97.0"
+    "vscode": "^1.96.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
   "main": "./out/extension.js",
+  "activationEvents": [
+    "*"
+  ],
   "contributes": {
-    "commands": [
+    "configuration": {
+      "title": "CodeMind AI",
+      "properties": {
+        "codemindAI.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API Key"
+        },
+        "codemindAI.baseUrl": {
+          "type": "string",
+          "default": "https://api.siliconflow.cn",
+          "description": "API Base URL"
+        },
+        "codemindAI.model": {
+          "type": "string",
+          "default": "deepseek-ai/DeepSeek-V2-Chat",
+          "description": "使用的 AI 模型"
+        },
+        "codemindAI.promptTemplate": {
+          "type": "string",
+          "default": "请补全或优化以下代码:\n{text}",
+          "description": "AI 提示模板"
+        },
+        "codemindAI.maxTokens": {
+          "type": "number",
+          "default": 2000,
+          "description": "生成的最大 token 数"
+        },
+        "codemindAI.temperature": {
+          "type": "number",
+          "default": 0.7,
+          "description": "生成的随机性 (0-1)"
+        },
+        "codemindAI.enableInlineCompletion": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用内联代码补全"
+        },
+        "codemindAI.triggerCharacters": {
+          "type": "array",
+          "default": [".", "(", "[", "{", "<", " "],
+          "description": "触发补全的字符"
+        },
+        "codemindAI.contextLines": {
+          "type": "number",
+          "default": 50,
+          "description": "用于上下文的代码行数"
+        }
+      }
+    },
+    "keybindings": [
       {
-        "command": "codemind-ai.helloWorld",
-        "title": "Hello World"
+        "command": "codemind.handleTab",
+        "key": "tab",
+        "when": "editorTextFocus && !editorTabMovesFocus"
       }
     ]
   },
@@ -38,5 +91,8 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1"
   },
-  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c"
+  "packageManager": "pnpm@9.15.0+sha512.76e2379760a4328ec4415815bcd6628dee727af3779aaa4c914e3944156c4299921a89f976381ee107d41f12cfa4b66681ca9c718f0668fa0831ed4c6d8ba56c",
+  "dependencies": {
+    "openai": "^4.28.0"
+  }
 }
